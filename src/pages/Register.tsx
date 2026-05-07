@@ -1,113 +1,71 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import InputText from "../components/ui/inputText";
+import { TextArea } from "../components/ui/textArea";
+import { Link } from "react-router-dom";
 
-import FormInput from "../components/ui/formInput";
-import Button from "../components/ui/button";
-import { PasswordInput } from "../components/ui/passInput";
-import { Textarea } from "../components/ui/textArea";
-import { Select } from "../components/ui/selectInput";
-
-const schema = z
-  .object({
-    nama: z.string().min(1, "nama harus diisi"),
-    email: z.string().email("email tidak valid"),
-    password: z.string().min(8, "password minimal 8 karakter"),
-    confirmPassword: z.string().min(8, "minimal 8 karakter"),
+const schema = z.object({
+    nama: z.string().min(3, "Nama minimal 3 karakter"),
+    alamat: z.string().min(5, "Alamat wajib di isi"),
+    email: z.string().email("Email tidak valid"),
     bio: z.string().optional(),
-    event: z.string().min(1, "event harus dipilih"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "password tidak sama",
-    path: ["confirmPassword"],
-  });
+});
 
-type FormData = z.infer<typeof schema>;
+type RegisterForm = z.infer<typeof schema>;
 
-export default function Register() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
+export default function RegisterForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
+        resolver: zodResolver(schema),
+    });
 
-  const onSubmit = async (data: FormData) => {
-    await new Promise((res) => setTimeout(res, 1500));
-    console.log("DATA VALID:", data);
-  };
+    const onSubmit = (data: RegisterForm) => {
+        console.log(data);
+    };
 
-  return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
-      <div className="w-full flex justify-center px-4">
-        <div className="w-full max-w-md bg-white border border-gray-200 rounded-xl shadow-md p-6">
+    return (
+        <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <h1 className="text-2xl font-bold text-center mb-1">Registrasi</h1>
+            <hr className="mb-6 border-gray-200" />
 
-          <h1 className="text-xl font-semibold text-center mb-4">
-            Register Event
-          </h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                <InputText
+                    label="Nama"
+                    {...register("nama")}
+                    error={errors.nama?.message}
+                />
+                <InputText
+                    label="Alamat"
+                    {...register("alamat")}
+                    error={errors.alamat?.message}
+                />
+                <InputText
+                    label="Email"
+                    {...register("email")}
+                    error={errors.email?.message}
+                />
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
-            <FormInput
-              text="Nama"
-              tipe="text"
-              name="nama"
-              register={register}
-              error={errors.nama?.message}
-            />
+                <TextArea
+                    label="Bio"
+                    {...register("bio")}
+                    error={errors.bio?.message}
+                    placeholder="Tentang dirimu..."
+                />
 
-            <FormInput
-              text="Email"
-              tipe="email"
-              name="email"
-              register={register}
-              error={errors.email?.message}
-            />
+                <button
+                    type="submit"
+                    className="w-full bg-red-900 hover:bg-red-800 text-white font-semibold py-3 rounded-lg mt-2 transition-all"
+                >
+                    Daftar
+                </button>
+            </form>
 
-            <PasswordInput
-              label="Password"
-              name="password"
-              register={register}
-              error={errors.password?.message}
-            />
-
-            <PasswordInput
-              label="Confirm Password"
-              name="confirmPassword"
-              register={register}
-              error={errors.confirmPassword?.message}
-            />
-
-            <Textarea
-              label="Bio"
-              name="bio"
-              register={register}
-              error={errors.bio?.message}
-            />
-
-            <Select
-              label="Event"
-              name="event"
-              register={register}
-              error={errors.event?.message}
-              options={[
-                { label: "Invofest", value: "invofest" },
-                { label: "Workshop AI", value: "ai" },
-              ]}
-            />
-
-            <Button
-              label={isSubmitting ? "Loading..." : "Register"}
-              variant="primary"
-              isLoading={isSubmitting}
-              type="submit"
-            />
-          </form>
+            <p className="text-center text-sm text-gray-600 mt-4">
+                Sudah punya akun?{" "}
+                <Link to="/login" className="text-red-900 hover:underline">
+                    Masuk di sini
+                </Link>
+            </p>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
