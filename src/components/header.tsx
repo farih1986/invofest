@@ -1,4 +1,4 @@
-import { Home, TrophyIcon,UserSquare,ComputerIcon,MicIcon, UserCircle2 }from "lucide-react";
+import { Home, TrophyIcon,UserSquare,ComputerIcon,MicIcon, UserCircle2, LayoutDashboard }from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export const Header: React.FC = () => {
@@ -10,6 +10,7 @@ export const Header: React.FC = () => {
         { label: "Workshop", href: "Workshop", icon: <ComputerIcon size={18} /> },
         { label: "Talkshow", href: "Talkshow", icon: <MicIcon size={18} /> },
         { label: "Login", href: "Login", icon: <UserCircle2 size={18} /> },
+        { label: "Dashboard", href: "Dashboard", icon: <LayoutDashboard size={18} /> },
     ];
     const activeStyle = "text-red-900";
     const defaultStyle = "text-slate-600 hover:text-red-900";
