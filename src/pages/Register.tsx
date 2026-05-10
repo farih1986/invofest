@@ -1,14 +1,15 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputText from "../components/ui/inputText";
 import { TextArea } from "../components/ui/textArea";
 import { Link } from "react-router-dom";
+import FormInput from "../components/ui/formInput";
 
 const schema = z.object({
     nama: z.string().min(3, "Nama minimal 3 karakter"),
     alamat: z.string().min(5, "Alamat wajib di isi"),
     email: z.string().email("Email tidak valid"),
+    password: z.string().min(8, "Password minimal 8 karakter"),
     bio: z.string().optional(),
 });
 
@@ -29,20 +30,37 @@ export default function RegisterForm() {
             <hr className="mb-6 border-gray-200" />
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                <InputText
-                    label="Nama"
-                    {...register("nama")}
+                <FormInput
+                    text="Nama"
+                    name="nama"
+                    tipe="text"
+                    register={register}
                     error={errors.nama?.message}
+                    placeholder="Masukkan nama"
                 />
-                <InputText
-                    label="Alamat"
-                    {...register("alamat")}
+                <FormInput
+                    text="Alamat"
+                    name="alamat"
+                    tipe="text"
+                    register={register}
                     error={errors.alamat?.message}
+                    placeholder="Masukkan alamat"
                 />
-                <InputText
-                    label="Email"
-                    {...register("email")}
+                <FormInput
+                    text="Email"
+                    name="email"
+                    tipe="email"
+                    register={register}
                     error={errors.email?.message}
+                    placeholder="Masukkan email"
+                />
+                <FormInput
+                    text="Password"
+                    name="password"
+                    tipe="password"
+                    register={register}
+                    error={errors.password?.message}
+                    placeholder="Masukkan password"
                 />
 
                 <TextArea

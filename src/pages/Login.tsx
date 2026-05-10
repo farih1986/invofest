@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputText from "../components/ui/inputText";
+import FormInput from "../components/ui/formInput";
 
 
 type LoginForm = z.infer<typeof schema>;
@@ -29,17 +29,22 @@ export default function Login() {
             <hr className="mb-6 border-gray-200" />
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                <InputText
-                    label="Email"
-                    {...register("email")}
+                <FormInput
+                    text="Email"
+                    name="email"
+                    tipe="email"
+                    register={register}
                     error={errors.email?.message}
+                    placeholder="Masukkan email"
                 />
 
-                <InputText
-                    label="Password"
-                    type="password"
-                    {...register("password")}
+                <FormInput
+                    text="Password"
+                    name="password"
+                    tipe="password"
+                    register={register}
                     error={errors.password?.message}
+                    placeholder="Masukkan password"
                 />
 
                 <button
