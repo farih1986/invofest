@@ -3,19 +3,23 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputText from "../components/ui/inputText";
 
+
+type LoginForm = z.infer<typeof schema>;
+type FormData = {
+    email: string;
+    password: string;
+}
 const schema = z.object({
     email: z.string().email("Email tidak valid"),
     password: z.string().min(8, "Password minimal 8 karakter"),
 });
-
-type LoginForm = z.infer<typeof schema>;
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data: LoginForm) => {
+    const onSubmit = (data: FormData) => {
         console.log(data);
     };
 

@@ -8,6 +8,9 @@ import Competition from "./pages/Competition";
 import Seminar from "./pages/Seminar";
 import Talkshow from "./pages/Talkshow";
 import Workshop from "./pages/Workshop";
+import CreateCategory from "./pages/dashboard/categories/CreateCategory";
+import CreateSpeaker from "./pages/dashboard/speaker/CreateSpeaker";
+import CreateEvent from "./pages/dashboard/event/CreateEvent";
 
 function App() {
   return  (
@@ -19,6 +22,9 @@ function App() {
           <Route path="/seminar" element={<Seminar />} />
           <Route path="/talkshow" element={<Talkshow />} />
           <Route path="/workshop" element={<Workshop />} />
+          <Route path="/category/create" element={<CreateCategory />} />
+          <Route path="/speaker/create" element={<CreateSpeaker />} />
+          <Route path="/event/create" element={<CreateEvent />} />
         </Route>
 
         <Route element={<AuthLayouts />}>
