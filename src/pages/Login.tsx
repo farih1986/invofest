@@ -2,26 +2,38 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/ui/formInput";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../components/store/UseAuthStore";
 
 
 type LoginForm = z.infer<typeof schema>;
 type FormData = {
     email: string;
-    password: string;
+    password: string; 
 }
 const schema = z.object({
     email: z.string().email("Email tidak valid"),
     password: z.string().min(8, "Password minimal 8 karakter"),
 });
 
+
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: zodResolver(schema),
     });
-
+    
+    const login = useAuthStore((state) => state.login);
     const onSubmit = (data: FormData) => {
-        console.log(data);
+        if (data.email === "admin@gmail.com" && data.password === "admin123") {
+        login(data.email);
+
+        alert("Login berhasil!");
+        navigate("/dashboard");
+    } else {
+        alert("Email atau password salah!");
+    }
     };
+    const navigate = useNavigate();
 
     return (
         <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
@@ -57,9 +69,9 @@ export default function Login() {
 
             <p className="text-center text-sm text-gray-600 mt-4">
                 Belum punya akun?{" "}
-                <a href="/register" className="text-red-900 hover:underline">
+                <Link to="/register" className="text-red-900 hover:underline">
                     Daftar di sini
-                </a>
+                </Link>
             </p>
         </div>
     );

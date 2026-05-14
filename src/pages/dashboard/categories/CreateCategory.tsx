@@ -38,6 +38,7 @@ export default function CreateCategory() {
                     label="Simpan"
                     variant="primary"
                     type="submit"
+                    className="mt-4"
                 />
             </form>
         </div>
