@@ -1,4 +1,4 @@
-import { Home, TrophyIcon,UserSquare,ComputerIcon,MicIcon, UserCircle2 }from "lucide-react";
+import { Home, TrophyIcon,UserSquare,ComputerIcon,MicIcon, UserCircle2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export const Header: React.FC = () => {
